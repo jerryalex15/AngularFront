@@ -3,7 +3,10 @@ import { Injectable, inject, signal } from "@angular/core";
 import { tap, map, catchError, of } from 'rxjs';
 import { JwtService } from "./jwt.service";
 
-@Injectable()
+
+@Injectable({
+    providedIn: 'root'
+})
 export class AuthService {
     private isAuthenticated = false;
 
@@ -14,7 +17,7 @@ export class AuthService {
     // Signal pour un état réactif dans toute l'app
     currentUser = signal<string | null>(localStorage.getItem('token'));
 
-    login(credentials: { username: string; password: string }) {
+    login(credentials: { email: string; password: string }) {
         return this.http.post<{ token: string }>(this.API_URL, credentials).pipe(
             tap(response => {
                 localStorage.setItem('token', response.token);

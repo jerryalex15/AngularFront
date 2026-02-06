@@ -33,11 +33,11 @@ describe('AuthService', () => {
 
     it('should login and store token, set current user and auth state', (done) => {
         const token = 'fake.jwt.token';
-        const decoded = { username: 'admin', roles: ['ROLE_USER'] };
+        const decoded = { email: 'test@gmail.com', roles: ['ROLE_USER'] };
 
         spyOn(jwtService, 'decode').and.returnValue(decoded as any);
 
-        service.login({ username: 'admin', password: 'pass' }).subscribe((result) => {
+        service.login({ email: 'test@gmail.com', password: 'pass' }).subscribe((result) => {
             expect(result).toBeTrue();
             expect(localStorage.getItem('token')).toBe(token);
             expect(service.isLoggedIn()).toBeTrue();
@@ -51,7 +51,7 @@ describe('AuthService', () => {
     });
 
     it('should return false on login error and keep unauthenticated', (done) => {
-        service.login({ username: 'admin', password: 'pass' }).subscribe((result) => {
+        service.login({ email: 'test@gmail.com', password: 'pass' }).subscribe((result) => {
             expect(result).toBeFalse();
             expect(service.isLoggedIn()).toBeFalse();
             expect(localStorage.getItem('token')).toBeNull();
