@@ -1,0 +1,43 @@
+<div class="register-container">
+    <mat-card class="register-card">
+        <mat-card-title>Inscription</mat-card-title>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nom complet</mat-label>
+                <input matInput type="text" formControlName="fullname" />
+
+                @if (registerForm.get('fullname')?.invalid && registerForm.get('fullname')?.touched) {
+                <mat-error>Nom requis</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email" />
+
+                @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+                <mat-error>Email invalide</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Mot de passe</mat-label>
+                <input matInput type="password" formControlName="password" />
+
+                @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+                <mat-error>Mot de passe requis</mat-error>
+                }
+            </mat-form-field>
+
+            <button
+                mat-raised-button
+                color="primary"
+                class="full-width"
+                [disabled]="registerForm.invalid"
+            >
+                S'inscrire
+            </button>
+        </form>
+    </mat-card>
+</div>
