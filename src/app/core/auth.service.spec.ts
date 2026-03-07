@@ -34,18 +34,20 @@ describe('AuthService', () => {
     it('should login and store token, set current user and auth state', (done) => {
         const token = 'fake.jwt.token';
         const decoded = { email: 'test@gmail.com', roles: ['ROLE_USER'] };
+        const TEST_PASSWORD = 'test-password'; //NOSONAR
 
         spyOn(jwtService, 'decode').and.returnValue(decoded as any);
+        const loginRequest = { email: 'test@gmail.com', password: TEST_PASSWORD };
 
-        service.login({ email: 'test@gmail.com', password: 'pass' }).subscribe((result) => {
+        service.login(loginRequest).subscribe((result) => {
             expect(result).toBeTrue();
-            expect(localStorage.getItem('token')).toBe(token);
+            expect(localStorage.getItem('accesstoken')).toBe(token);
             expect(service.isLoggedIn()).toBeTrue();
             expect(service.currentUser()).toEqual(decoded as any);
             done();
         });
 
-        const req = httpMock.expectOne('http://localhost:8000/api/auth/login');
+        const req = httpMock.expectOne('http://localhost:8080/api/auth/login');
         expect(req.request.method).toBe('POST');
         req.flush({ token });
     });
@@ -59,7 +61,7 @@ describe('AuthService', () => {
             done();
         });
 
-        const req = httpMock.expectOne('http://localhost:8000/api/auth/login');
+        const req = httpMock.expectOne('http://localhost:8080/api/auth/login');
         req.flush('Unauthorized', { status: 401, statusText: 'Unauthorized' });
     });
 
