@@ -1,1 +1,22 @@
-<p>home-component works!</p>
+<mat-toolbar color="primary" class="header">
+    <span class="app-title">My App</span>
+
+    <span class="spacer"></span>
+
+    <button 
+    mat-icon-button
+    (click)="openProfile()"
+    >
+        <mat-icon>account_circle</mat-icon>
+    </button>
+</mat-toolbar>
+
+<div class="content">
+    <h2>Welcome to My App!</h2>
+    
+    @if (this.isProfileOpen) {
+        <app-profile-card [user]="user$ | async"></app-profile-card>
+    } @else {
+        <p>Who is connected?</p>
+    }
+</div>

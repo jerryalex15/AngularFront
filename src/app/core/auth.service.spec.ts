@@ -45,7 +45,7 @@ describe('AuthService', () => {
             done();
         });
 
-        const req = httpMock.expectOne('http://localhost:8000/api/login');
+        const req = httpMock.expectOne('http://localhost:8000/api/auth/login');
         expect(req.request.method).toBe('POST');
         req.flush({ token });
     });
@@ -59,7 +59,7 @@ describe('AuthService', () => {
             done();
         });
 
-        const req = httpMock.expectOne('http://localhost:8000/api/login');
+        const req = httpMock.expectOne('http://localhost:8000/api/auth/login');
         req.flush('Unauthorized', { status: 401, statusText: 'Unauthorized' });
     });
 

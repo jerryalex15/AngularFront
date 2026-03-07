@@ -1,0 +1,15 @@
+<mat-card color class="profile-card">
+    <mat-card-title class="card-title">Your are {{ user?.fullName }}</mat-card-title>
+    <mat-card-content>
+        id: {{ user?.id }}
+    </mat-card-content>
+    <mat-card-content>
+        email: {{ user?.email }}
+    </mat-card-content>
+    <mat-card-content>
+        roles: {{ user?.roles }}
+    </mat-card-content>
+    <mat-card-actions>
+        <button class="card-actions" mat-raised-button (click)="logout()">Logout</button>
+    </mat-card-actions>
+</mat-card>
