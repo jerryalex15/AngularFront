@@ -3,6 +3,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { AuthService } from './auth.service';
 import { JwtService } from './jwt.service';
+import { JWTPayload } from '../models/JWTPayload';
 
 describe('AuthService', () => {
     let service: AuthService;
@@ -37,11 +38,11 @@ describe('AuthService', () => {
 
         spyOn(jwtService, 'decode').and.returnValue(decoded as any);
 
-        service.login({ email: 'test@gmail.com', password: 'pass' }).subscribe((result) => {
+        service.login({ email: 'test@gmail.com', password: 'pass' }).subscribe((result) => { //NOSONAR
             expect(result).toBeTrue();
-            expect(localStorage.getItem('token')).toBe(token);
+            expect(localStorage.getItem('accessToken')).toBe(token);
             expect(service.isLoggedIn()).toBeTrue();
-            expect(service.currentUser()).toEqual(decoded as any);
+            expect(service.currentUserSignalPayload()).toEqual(decoded as any);
             done();
         });
 
@@ -51,11 +52,11 @@ describe('AuthService', () => {
     });
 
     it('should return false on login error and keep unauthenticated', (done) => {
-        service.login({ email: 'test@gmail.com', password: 'pass' }).subscribe((result) => {
+        service.login({ email: 'test@gmail.com', password: 'pass' }).subscribe((result) => {//NOSONAR
             expect(result).toBeFalse();
             expect(service.isLoggedIn()).toBeFalse();
-            expect(localStorage.getItem('token')).toBeNull();
-            expect(service.currentUser()).toBeNull();
+            expect(localStorage.getItem('accessToken')).toBeNull();
+            expect(service.currentUserSignalPayload()).toBeNull();
             done();
         });
 
@@ -64,11 +65,12 @@ describe('AuthService', () => {
     });
 
     it('should logout and set auth state to false', () => {
-        localStorage.setItem('token', 'existing.token');
-        service.currentUser.set('existing.token');
+        
+        localStorage.setItem('accessToken', 'user@test.com');
+        service.currentUserSignalPayload.set({ sub: 'user@test.com', exp: 1234567890, iat: 1234567890 } as JWTPayload );
         service.logout();
         expect(service.isLoggedIn()).toBeFalse();
-        expect(localStorage.getItem('token')).toBeNull();
-        expect(service.currentUser()).toBeNull();
+        expect(localStorage.getItem('accessToken')).toBeNull();
+        expect(service.currentUserSignalPayload()).toBeNull();
     });
 });

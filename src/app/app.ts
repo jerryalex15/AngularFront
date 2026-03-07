@@ -24,7 +24,8 @@ export class App implements OnInit {
     if (token) {
       // Token présent → restaurer l'utilisateur
       const decoded = this.jwtService.decode(token);
-      this.authService.currentUser.set(decoded);
+      
+      this.authService.currentUserSignalPayload.set(decoded);
     } else if (refreshToken) {
       // Pas d'access token mais refresh token → renouveler silencieusement
       this.authService.refreshToken(refreshToken).subscribe();
