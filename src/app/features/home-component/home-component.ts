@@ -27,7 +27,7 @@ export class HomeComponent {
   user: JWTPayload | null = null;
 
   constructor(public readonly appService: AppService, public readonly authService: AuthService) {
-    this.user = this.authService.currentUserSignalPayload(); 
+    this.user = this.authService.currentUserSignalPayload();
   }
 
   openProfile() {

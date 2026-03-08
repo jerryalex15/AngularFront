@@ -27,21 +27,21 @@ export class AuthService {
         });
 
         return this.http.post<{ accessToken: string, refreshToken: string }>(
-            `${this.API_URL}login`,
-            credentials,
-            { headers }
-        ).pipe(
-            tap(response => {
-            localStorage.setItem('accessToken', response.accessToken);
-            localStorage.setItem('refreshToken', response.refreshToken);
-            this.isAuthenticated = true;
-            const decoded: any = this.jwtService.decode(response.accessToken);
-            this.currentUserSignalPayload.set(decoded);
-            
-            }),
-            map(() => true),
-            catchError(() => of(false))
-        );
+                `${this.API_URL}login`,
+                credentials,
+                { headers }
+            ).pipe(
+                tap(response => {
+                localStorage.setItem('accessToken', response.accessToken);
+                localStorage.setItem('refreshToken', response.refreshToken);
+                this.isAuthenticated = true;
+                const decoded: JWTPayload = this.jwtService.decode(response.accessToken);
+                this.currentUserSignalPayload.set(decoded);
+                
+                }),
+                map(() => true),
+                catchError(() => of(false))
+            );
     }
 
     signup(userData: { fullName: string | null; email: string | null ; password: string | null }): Observable<boolean> {
