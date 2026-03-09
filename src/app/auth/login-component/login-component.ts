@@ -25,10 +25,10 @@ import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./login-component.scss'],
 })
 export class LoginComponent {
-
+  
   hidePassword = true;
   loginForm!: ReturnType<FormBuilder['group']>;
-
+  
   constructor(private readonly fb: FormBuilder, private readonly authService: AuthService, private readonly router: Router, private readonly snackBar: MatSnackBar) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],

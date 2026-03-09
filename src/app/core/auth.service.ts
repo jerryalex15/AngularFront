@@ -3,6 +3,8 @@ import { Injectable, inject, signal } from "@angular/core";
 import { tap, map, catchError, of, Observable } from 'rxjs';
 import { JwtService } from "./jwt.service";
 import { Router } from "@angular/router";
+import { environment } from "../../environments/environment";
+import { JWTPayload } from "../models/JWTPayload";
 
 @Injectable({
     providedIn: 'root'
@@ -13,11 +15,11 @@ export class AuthService {
     private isAuthenticated = false;
 
     private readonly http = inject(HttpClient);
-    private readonly API_URL = 'http://localhost:8080/api/auth/';
+    private readonly API_URL = environment.apiUrl + '/auth/';
     private readonly jwtService = inject(JwtService);
 
     // Signal pour un état réactif dans toute l'app
-    currentUser = signal<string | null>(localStorage.getItem('accessToken'));
+    currentUserSignalPayload = signal<JWTPayload | null>(null);
 
     login(credentials: { email: string; password: string }): Observable<boolean> {
         const headers = new HttpHeaders({
@@ -25,20 +27,21 @@ export class AuthService {
         });
 
         return this.http.post<{ accessToken: string, refreshToken: string }>(
-            `${this.API_URL}login`,
-            credentials,
-            { headers }
-        ).pipe(
-            tap(response => {
-            localStorage.setItem('accessToken', response.accessToken);
-            localStorage.setItem('refreshToken', response.refreshToken);
-            this.isAuthenticated = true;
-            const decoded: any = this.jwtService.decode(response.accessToken);
-            this.currentUser.set(decoded);
-            }),
-            map(() => true),
-            catchError(() => of(false))
-        );
+                `${this.API_URL}login`,
+                credentials,
+                { headers }
+            ).pipe(
+                tap(response => {
+                localStorage.setItem('accessToken', response.accessToken);
+                localStorage.setItem('refreshToken', response.refreshToken);
+                this.isAuthenticated = true;
+                const decoded: JWTPayload = this.jwtService.decode(response.accessToken);
+                this.currentUserSignalPayload.set(decoded);
+                
+                }),
+                map(() => true),
+                catchError(() => of(false))
+            );
     }
 
     signup(userData: { fullName: string | null; email: string | null ; password: string | null }): Observable<boolean> {
@@ -56,7 +59,7 @@ export class AuthService {
             tap(response => {
                 localStorage.setItem('accessToken', response.accessToken);
                 const decoded: any = this.jwtService.decode(response.accessToken);
-                this.currentUser.set(decoded); 
+                this.currentUserSignalPayload.set(decoded); 
             }),
             map(() => true),
             catchError(() => {
@@ -74,7 +77,7 @@ export class AuthService {
 
     clearSession(): void {
         this.isAuthenticated = false;
-        this.currentUser.set(null);
+        this.currentUserSignalPayload.set(null);
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         this.router.navigate(['/login']);
