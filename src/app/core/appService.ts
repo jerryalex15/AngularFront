@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
 import { User } from "../models/user";
@@ -12,8 +12,8 @@ export class AppService {
     private readonly urlApi = environment.apiUrl;
     private currentUser!: User;
 
-    constructor(private readonly http: HttpClient) {}
-    
+    private readonly http = inject(HttpClient);
+
     getUserProfile(): Observable<User> {
         const token = localStorage.getItem('accessToken');
         return this.http.get<User>(`${this.urlApi}/users/me`, {

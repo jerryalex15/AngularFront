@@ -3,6 +3,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { AuthService } from './auth.service';
 import { JwtService } from './jwt.service';
+import { JWTPayload } from '../models/JWTPayload';
 
 describe('AuthService', () => {
     let service: AuthService;
@@ -32,32 +33,33 @@ describe('AuthService', () => {
     });
 
     it('should login and store token, set current user and auth state', (done) => {
-        const token = 'fake.jwt.token';
-        const decoded = { email: 'test@gmail.com', roles: ['ROLE_USER'] };
-        const TEST_PASSWORD = 'test-password'; //NOSONAR
+        const accessToken = 'fake.jwt.token';
+        const refreshToken = 'fake.refresh.token';
+        const decoded: JWTPayload = {  sub: 'user@test.com', exp: 1234567890, iat: 1234567890 };
 
-        spyOn(jwtService, 'decode').and.returnValue(decoded as any);
-        const loginRequest = { email: 'test@gmail.com', password: TEST_PASSWORD };
+        spyOn(jwtService, 'decode').and.returnValue(decoded);
 
-        service.login(loginRequest).subscribe((result) => {
+        service.login({ email: 'test@gmail.com', password: 'pass' }).subscribe((result) => { //NOSONAR
             expect(result).toBeTrue();
-            expect(localStorage.getItem('accesstoken')).toBe(token);
+            expect(localStorage.getItem('accessToken')).toBe(accessToken);
+            expect(localStorage.getItem('refreshToken')).toBe(refreshToken);
             expect(service.isLoggedIn()).toBeTrue();
-            expect(service.currentUser()).toEqual(decoded as any);
+            expect(service.currentUserSignalPayload()).toEqual(decoded);
             done();
         });
 
         const req = httpMock.expectOne('http://localhost:8080/api/auth/login');
         expect(req.request.method).toBe('POST');
-        req.flush({ token });
+        req.flush({ accessToken, refreshToken });
     });
 
     it('should return false on login error and keep unauthenticated', (done) => {
-        service.login({ email: 'test@gmail.com', password: 'pass' }).subscribe((result) => {
+        service.login({ email: 'test@gmail.com', password: 'pass' }).subscribe((result) => {//NOSONAR
             expect(result).toBeFalse();
             expect(service.isLoggedIn()).toBeFalse();
-            expect(localStorage.getItem('token')).toBeNull();
-            expect(service.currentUser()).toBeNull();
+            expect(localStorage.getItem('accessToken')).toBeNull();
+            expect(localStorage.getItem('refreshToken')).toBeNull();
+            expect(service.currentUserSignalPayload()).toBeNull();
             done();
         });
 
@@ -66,11 +68,24 @@ describe('AuthService', () => {
     });
 
     it('should logout and set auth state to false', () => {
-        localStorage.setItem('token', 'existing.token');
-        service.currentUser.set('existing.token');
-        service.logout();
+        localStorage.setItem('accessToken', 'token');
+
+        service.currentUserSignalPayload.set({
+            sub: 'user@test.com',
+            exp: 1234567890,
+            iat: 1234567890
+        } as JWTPayload);
+
+        service.logout().subscribe();
+
+        const req = httpMock.expectOne('http://localhost:8080/api/auth/logout');
+        expect(req.request.method).toBe('POST');
+
+        req.flush({}); // simule réponse backend
+
         expect(service.isLoggedIn()).toBeFalse();
-        expect(localStorage.getItem('token')).toBeNull();
-        expect(service.currentUser()).toBeNull();
+        expect(localStorage.getItem('accessToken')).toBeNull();
+        expect(localStorage.getItem('refreshToken')).toBeNull();
+        expect(service.currentUserSignalPayload()).toBeNull();
     });
 });

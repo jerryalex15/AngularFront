@@ -7,6 +7,8 @@ import { User } from '../../models/user';
 import { tap, catchError } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { scheduled, asyncScheduler, Observable } from 'rxjs';
+import { AuthService } from '../../core/auth.service';
+import { JWTPayload } from '../../models/JWTPayload';
 
 @Component({
   selector: 'app-home-component',
@@ -22,8 +24,11 @@ import { scheduled, asyncScheduler, Observable } from 'rxjs';
 export class HomeComponent {
   user$!: Observable<User | null>; // Observable pour le profil utilisateur
   isProfileOpen = false;
-  
-  constructor(public readonly appService: AppService) {}
+  user: JWTPayload | null = null;
+
+  constructor(public readonly appService: AppService, public readonly authService: AuthService) {
+    this.user = this.authService.currentUserSignalPayload();
+  }
 
   openProfile() {
     this.isProfileOpen = !this.isProfileOpen;
