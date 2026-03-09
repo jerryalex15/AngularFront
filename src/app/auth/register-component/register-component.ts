@@ -45,7 +45,7 @@ export class RegisterComponent {
           this.snackBar.open('Inscription réussie !', 'OK', { duration: 3000 });
           this.router.navigate(['/login']);
         } else {
-          this.snackBar.open('Échec de l\'inscription.', 'OK', { duration: 3000 });
+          this.snackBar.open('Erreur lors de l\'inscription.', 'OK', { duration: 3000 });
         }
       });
     }

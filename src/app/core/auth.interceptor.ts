@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
     HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse
 } from '@angular/common/http';
-import { Observable, throwError, switchMap, catchError, of } from 'rxjs';
+import { Observable, throwError, switchMap, catchError } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class AuthInterceptor implements HttpInterceptor {
             const token = localStorage.getItem('accessToken');
             if (token) {
                 authReq = req.clone({
-                setHeaders: { Authorization: `Bearer ${token}` }
+                    setHeaders: { Authorization: `Bearer ${token}` }
                 });
             }
         }

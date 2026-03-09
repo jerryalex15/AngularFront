@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { User } from '../../../models/user';
 import { AuthService } from '../../../core/auth.service';
@@ -19,8 +19,10 @@ import { MatButtonModule } from '@angular/material/button';
 export class ProfileCard {
   
   @Input() user: User | null = null;
-  
-  constructor(private readonly authService: AuthService, private readonly router: Router, private readonly snackBar: MatSnackBar) {}
+
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly snackBar = inject(MatSnackBar);
 
   logout(){
     this.authService.logout().subscribe({
