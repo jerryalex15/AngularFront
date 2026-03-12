@@ -1,81 +1,58 @@
 <?xml version="1.0"?>
-<testsuite name="Chrome Headless 145.0.0.0 (Mac OS 10.15.7)" package="" timestamp="2026-03-12T11:10:41" id="0" hostname="MacBook-Pro-de-RAZAFINDRAIBE.local" tests="47" errors="0" failures="0" time="0.065">
+<testsuite name="Chrome Headless 145.0.0.0 (Mac OS 10.15.7)" package="" timestamp="2026-03-12T11:49:21" id="0" hostname="MacBook-Pro-de-RAZAFINDRAIBE.local" tests="48" errors="0" failures="0" time="0.088">
   <properties>
     <property name="browser.fullName" value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.0.0 Safari/537.36"/>
   </properties>
-  <testcase name="JwtService should decode a JWT token" time="0.002" classname="JwtService"/>
-  <testcase name="JwtService should be created" time="0" classname="JwtService"/>
-  <testcase name="App should create the app" time="0.003" classname="App"/>
-  <testcase name="LoginComponent should create" time="0.01" classname="LoginComponent"/>
-  <testcase name="LoginComponent should redirect to register on redirectToRegister call" time="0.003" classname="LoginComponent"/>
-  <testcase name="LoginComponent should not submit if form is invalid" time="0.002" classname="LoginComponent"/>
-  <testcase name="LoginComponent should login user and redirect to home" time="0.004" classname="LoginComponent"/>
-  <testcase name="RegisterComponent should register user and redirect to login" time="0.006" classname="RegisterComponent"/>
-  <testcase name="RegisterComponent should create" time="0.003" classname="RegisterComponent"/>
-  <testcase name="RegisterComponent should redirect to login on redirectToLogin call" time="0.002" classname="RegisterComponent"/>
-  <testcase name="RegisterComponent should not submit if form is invalid" time="0.002" classname="RegisterComponent"/>
-  <testcase name="RegisterComponent should show error message on registration failure" time="0.003" classname="RegisterComponent"/>
+  <testcase name="App should create the app" time="0.007" classname="App"/>
+  <testcase name="AuthService should login and store token, set current user and auth state" time="0.002" classname="AuthService"/>
+  <testcase name="AuthService should logout and set auth state to false" time="0.002" classname="AuthService"/>
+  <testcase name="AuthService should return false on login error and keep unauthenticated" time="0.001" classname="AuthService"/>
+  <testcase name="AuthInterceptor should NOT add Authorization header when no accessToken" time="0" classname="AuthInterceptor"/>
+  <testcase name="AuthInterceptor should skip /auth/refresh and not add Authorization header" time="0.001" classname="AuthInterceptor"/>
+  <testcase name="AuthInterceptor should propagate non-401 errors without attempting refresh" time="0.001" classname="AuthInterceptor"/>
+  <testcase name="AuthInterceptor should add Authorization header when accessToken exists" time="0" classname="AuthInterceptor"/>
   <testcase name="AuthInterceptor should throw error if no refreshToken in localStorage" time="0.001" classname="AuthInterceptor"/>
-  <testcase name="AuthInterceptor should throw error if refresh returns false" time="0.001" classname="AuthInterceptor"/>
-  <testcase name="AuthInterceptor should propagate non-401 errors without attempting refresh" time="0" classname="AuthInterceptor"/>
-  <testcase name="AuthInterceptor should NOT attempt refresh on 401 for skip URLs" time="0.001" classname="AuthInterceptor"/>
-  <testcase name="AuthInterceptor should skip /auth/register and not add Authorization header" time="0" classname="AuthInterceptor"/>
+  <testcase name="AuthInterceptor should throw error if refresh returns false" time="0" classname="AuthInterceptor"/>
   <testcase name="AuthInterceptor should skip /auth/login and not add Authorization header" time="0.001" classname="AuthInterceptor"/>
   <testcase name="AuthInterceptor should retry request with new token after successful refresh" time="0" classname="AuthInterceptor"/>
-  <testcase name="AuthInterceptor should skip /auth/refresh and not add Authorization header" time="0.001" classname="AuthInterceptor"/>
-  <testcase name="AuthInterceptor should NOT add Authorization header when no accessToken" time="0" classname="AuthInterceptor"/>
-  <testcase name="AuthInterceptor should add Authorization header when accessToken exists" time="0" classname="AuthInterceptor"/>
+  <testcase name="AuthInterceptor should NOT attempt refresh on 401 for skip URLs" time="0" classname="AuthInterceptor"/>
   <testcase name="AuthInterceptor should propagate 403 errors without attempting refresh" time="0" classname="AuthInterceptor"/>
-  <testcase name="AuthService should login and store token, set current user and auth state" time="0.001" classname="AuthService"/>
-  <testcase name="AuthService should logout and set auth state to false" time="0.004" classname="AuthService"/>
-  <testcase name="AuthService should return false on login error and keep unauthenticated" time="0.001" classname="AuthService"/>
-  <testcase name="HomeComponent should still toggle isProfileOpen even when getUserProfile fails" time="0.002" classname="HomeComponent"/>
-  <testcase name="HomeComponent should toggle isProfileOpen from true to false" time="0.001" classname="HomeComponent"/>
-  <testcase name="HomeComponent should assign user$ after openProfile is called" time="0" classname="HomeComponent"/>
-  <testcase name="HomeComponent should toggle isProfileOpen from false to true" time="0" classname="HomeComponent"/>
-  <testcase name="HomeComponent should set user to null if currentUserSignalPayload returns null" time="0.001" classname="HomeComponent"/>
-  <testcase name="HomeComponent should call currentUserSignalPayload on init and assign user" time="0" classname="HomeComponent"/>
-  <testcase name="HomeComponent should NOT call setCurrentUser when getUserProfile fails" time="0.001" classname="HomeComponent"/>
-  <testcase name="HomeComponent should create the component" time="0" classname="HomeComponent"/>
-  <testcase name="HomeComponent should emit null when getUserProfile fails" time="0.001" classname="HomeComponent"/>
-  <testcase name="HomeComponent should call setCurrentUser with the fetched user" time="0" classname="HomeComponent"/>
-  <testcase name="HomeComponent should emit the user through user$" time="0.001" classname="HomeComponent"/>
-  <testcase name="ProfileCard should call snackbar exactly once on error" time="0.004" classname="ProfileCard"/>
-  <testcase name="ProfileCard should create the component" time="0" classname="ProfileCard"/>
-  <testcase name="ProfileCard should call authService.logout()" time="0.001" classname="ProfileCard"/>
-  <testcase name="ProfileCard should open success snackbar on successful logout" time="0" classname="ProfileCard"/>
+  <testcase name="AuthInterceptor should skip /auth/register and not add Authorization header" time="0.001" classname="AuthInterceptor"/>
+  <testcase name="RegisterComponent should show error message when email already exists" time="0.015" classname="RegisterComponent"/>
+  <testcase name="RegisterComponent should not submit if form is invalid" time="0.004" classname="RegisterComponent"/>
+  <testcase name="RegisterComponent should redirect to login on redirectToLogin call" time="0.003" classname="RegisterComponent"/>
+  <testcase name="RegisterComponent should show error message on registration failure" time="0.004" classname="RegisterComponent"/>
+  <testcase name="RegisterComponent should create" time="0.003" classname="RegisterComponent"/>
+  <testcase name="RegisterComponent should register user and redirect to login" time="0.004" classname="RegisterComponent"/>
+  <testcase name="LoginComponent should login user and redirect to home" time="0.007" classname="LoginComponent"/>
+  <testcase name="LoginComponent should redirect to register on redirectToRegister call" time="0.003" classname="LoginComponent"/>
+  <testcase name="LoginComponent should not submit if form is invalid" time="0.003" classname="LoginComponent"/>
+  <testcase name="LoginComponent should create" time="0.003" classname="LoginComponent"/>
+  <testcase name="ProfileCard should open success snackbar on successful logout" time="0.002" classname="ProfileCard"/>
+  <testcase name="ProfileCard should accept a user via @Input" time="0" classname="ProfileCard"/>
+  <testcase name="ProfileCard should call snackbar exactly once on error" time="0.003" classname="ProfileCard"/>
+  <testcase name="ProfileCard should have user as null by default" time="0" classname="ProfileCard"/>
+  <testcase name="ProfileCard should create the component" time="0.001" classname="ProfileCard"/>
   <testcase name="ProfileCard should open error snackbar when logout fails" time="0" classname="ProfileCard"/>
   <testcase name="ProfileCard should NOT open success snackbar when logout fails" time="0.001" classname="ProfileCard"/>
   <testcase name="ProfileCard should NOT open error snackbar on successful logout" time="0" classname="ProfileCard"/>
-  <testcase name="ProfileCard should call snackbar exactly once on success" time="0" classname="ProfileCard"/>
-  <testcase name="ProfileCard should accept a user via @Input" time="0.001" classname="ProfileCard"/>
-  <testcase name="ProfileCard should have user as null by default" time="0" classname="ProfileCard"/>
+  <testcase name="ProfileCard should call snackbar exactly once on success" time="0.007" classname="ProfileCard"/>
+  <testcase name="ProfileCard should call authService.logout()" time="0.001" classname="ProfileCard"/>
+  <testcase name="HomeComponent should toggle isProfileOpen from true to false" time="0.002" classname="HomeComponent"/>
+  <testcase name="HomeComponent should assign user$ after openProfile is called" time="0.001" classname="HomeComponent"/>
+  <testcase name="HomeComponent should toggle isProfileOpen from false to true" time="0" classname="HomeComponent"/>
+  <testcase name="HomeComponent should call currentUserSignalPayload on init and assign user" time="0" classname="HomeComponent"/>
+  <testcase name="HomeComponent should set user to null if currentUserSignalPayload returns null" time="0" classname="HomeComponent"/>
+  <testcase name="HomeComponent should create the component" time="0.001" classname="HomeComponent"/>
+  <testcase name="HomeComponent should still toggle isProfileOpen even when getUserProfile fails" time="0" classname="HomeComponent"/>
+  <testcase name="HomeComponent should NOT call setCurrentUser when getUserProfile fails" time="0.001" classname="HomeComponent"/>
+  <testcase name="HomeComponent should emit null when getUserProfile fails" time="0" classname="HomeComponent"/>
+  <testcase name="HomeComponent should call setCurrentUser with the fetched user" time="0.001" classname="HomeComponent"/>
+  <testcase name="HomeComponent should emit the user through user$" time="0" classname="HomeComponent"/>
+  <testcase name="JwtService should decode a JWT token" time="0.001" classname="JwtService"/>
+  <testcase name="JwtService should be created" time="0" classname="JwtService"/>
   <system-out>
-    <![CDATA[Chrome Headless 145.0.0.0 (Mac OS 10.15.7) ERROR: 'Erreur lors de la récupération du profil utilisateur', Error: Network error
-Error: Network error
-    at http://localhost:9876/base/src/app/features/home-component/home-component.spec.ts:141:24
-    at _Observable.init [as _subscribe] (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/observable/throwError.js:5:51)
-    at _Observable._trySubscribe (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/Observable.js:37:25)
-    at http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/Observable.js:31:30
-    at errorContext (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
-    at _Observable.subscribe (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/Observable.js:22:9)
-    at http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/operators/tap.js:15:20
-    at OperatorSubscriber.<anonymous> (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/util/lift.js:10:28)
-    at http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/Observable.js:26:30
-    at errorContext (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
-,Chrome Headless 145.0.0.0 (Mac OS 10.15.7) ERROR: 'Erreur lors de la récupération du profil utilisateur', Error: Network error
-Error: Network error
-    at http://localhost:9876/base/src/app/features/home-component/home-component.spec.ts:125:24
-    at _Observable.init [as _subscribe] (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/observable/throwError.js:5:51)
-    at _Observable._trySubscribe (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/Observable.js:37:25)
-    at http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/Observable.js:31:30
-    at errorContext (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
-    at _Observable.subscribe (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/Observable.js:22:9)
-    at http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/operators/tap.js:15:20
-    at OperatorSubscriber.<anonymous> (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/util/lift.js:10:28)
-    at http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/Observable.js:26:30
-    at errorContext (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
-,Chrome Headless 145.0.0.0 (Mac OS 10.15.7) ERROR: 'Error during logout:', Error: Network error
+    <![CDATA[Chrome Headless 145.0.0.0 (Mac OS 10.15.7) ERROR: 'Error during logout:', Error: Network error
 Error: Network error
     at http://localhost:9876/base/src/app/features/profile/profile-card/profile-card.spec.ts:123:24
     at _Observable.init [as _subscribe] (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/observable/throwError.js:5:51)
@@ -111,6 +88,30 @@ Error: Network error
     at UserContext.<anonymous> (http://localhost:9876/base/src/app/features/profile/profile-card/profile-card.spec.ts:112:15)
     at _ZoneDelegate.invoke (http://localhost:9876/base/node_modules/zone.js/fesm2015/zone.js:398:28)
     at _ProxyZoneSpec.onInvoke (http://localhost:9876/base/node_modules/zone.js/fesm2015/zone-testing.js:2132:39)
+,Chrome Headless 145.0.0.0 (Mac OS 10.15.7) ERROR: 'Erreur lors de la récupération du profil utilisateur', Error: Network error
+Error: Network error
+    at http://localhost:9876/base/src/app/features/home-component/home-component.spec.ts:141:24
+    at _Observable.init [as _subscribe] (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/observable/throwError.js:5:51)
+    at _Observable._trySubscribe (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/Observable.js:37:25)
+    at http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/Observable.js:31:30
+    at errorContext (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
+    at _Observable.subscribe (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/Observable.js:22:9)
+    at http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/operators/tap.js:15:20
+    at OperatorSubscriber.<anonymous> (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/util/lift.js:10:28)
+    at http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/Observable.js:26:30
+    at errorContext (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
+,Chrome Headless 145.0.0.0 (Mac OS 10.15.7) ERROR: 'Erreur lors de la récupération du profil utilisateur', Error: Network error
+Error: Network error
+    at http://localhost:9876/base/src/app/features/home-component/home-component.spec.ts:125:24
+    at _Observable.init [as _subscribe] (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/observable/throwError.js:5:51)
+    at _Observable._trySubscribe (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/Observable.js:37:25)
+    at http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/Observable.js:31:30
+    at errorContext (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
+    at _Observable.subscribe (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/Observable.js:22:9)
+    at http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/operators/tap.js:15:20
+    at OperatorSubscriber.<anonymous> (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/util/lift.js:10:28)
+    at http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/Observable.js:26:30
+    at errorContext (http://localhost:9876/base/node_modules/rxjs/dist/esm/internal/util/errorContext.js:19:9)
 
 ]]>
   </system-out>

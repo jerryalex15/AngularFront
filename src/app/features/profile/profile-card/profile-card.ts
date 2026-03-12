@@ -32,7 +32,7 @@ export class ProfileCard {
       error: (err) => {
         this.snackBar.open('An error occurred during logout. Please try again.', 'Close', { duration: 3000 });
         console.error('Error during logout:', err);
-      } 
+      }
     });
   }
 }

@@ -40,12 +40,12 @@ export class RegisterComponent {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      this.authService.signup(this.registerForm.getRawValue()).subscribe(success => {
+      this.authService.signup(this.registerForm.getRawValue()).subscribe(({ success, message }) => {
         if (success) {
-          this.snackBar.open('Inscription réussie !', 'OK', { duration: 3000 });
+          this.snackBar.open(message, 'OK', { duration: 3000 });
           this.router.navigate(['/login']);
         } else {
-          this.snackBar.open('Erreur lors de l\'inscription.', 'OK', { duration: 3000 });
+          this.snackBar.open(message, 'OK', { duration: 3000 });
         }
       });
     }
