@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs/internal/observable/of';
+import { ANIMATION_MODULE_TYPE } from '@angular/platform-browser/animations';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -30,6 +31,7 @@ describe('RegisterComponent', () => {
       ],
       providers: [
         provideHttpClient(), // 👈 mock HttpClient pour standalone
+        { provide: ANIMATION_MODULE_TYPE, useValue: 'NoopAnimations' },
         { provide: AuthService, useValue: authServiceMock },
         { provide: Router, useValue: routerMock },
         { provide: MatSnackBar, useValue: snackBarMock }

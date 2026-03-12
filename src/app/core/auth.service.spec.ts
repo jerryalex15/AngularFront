@@ -4,6 +4,7 @@ import { provideHttpClientTesting, HttpTestingController } from '@angular/common
 import { AuthService } from './auth.service';
 import { JwtService } from './jwt.service';
 import { JWTPayload } from '../models/JWTPayload';
+import { Router } from '@angular/router';
 
 describe('AuthService', () => {
     let service: AuthService;
@@ -18,7 +19,9 @@ describe('AuthService', () => {
                 AuthService, 
                 JwtService, 
                 provideHttpClient(), 
-                provideHttpClientTesting()
+                provideHttpClientTesting(),
+                provideHttpClientTesting(),
+                { provide: Router, useValue: { navigate: jasmine.createSpy('navigate') } }
             ]
         });
 
@@ -166,5 +169,20 @@ describe('AuthService', () => {
         expect(localStorage.getItem('accessToken')).toBeNull();
         expect(localStorage.getItem('refreshToken')).toBeNull();
         expect(service.isLoggedIn()).toBeFalse();
+    });
+
+    it('should clear session and navigate to login on clearSession', () => {
+        const router = TestBed.inject(Router);
+        localStorage.setItem('accessToken', 'token');
+        localStorage.setItem('refreshToken', 'refresh');
+        service.currentUserSignalPayload.set({ sub: 'user@test.com', exp: 9999999999, iat: 1234567890 });
+
+        service.clearSession();
+
+        expect(localStorage.getItem('accessToken')).toBeNull();
+        expect(localStorage.getItem('refreshToken')).toBeNull();
+        expect(service.isLoggedIn()).toBeFalse();
+        expect(service.currentUserSignalPayload()).toBeNull();
+        expect(router.navigate).toHaveBeenCalledWith(['/login']);
     });
 });
