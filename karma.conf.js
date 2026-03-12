@@ -9,6 +9,7 @@ module.exports = function(config) { //NOSONAR
         },
         coverageReporter: {
             dir: 'coverage/',
+            subdir: '.',
             reporters: [
                 { type: 'html'         },
                 { type: 'lcov'         },

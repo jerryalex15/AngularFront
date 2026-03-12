@@ -46,9 +46,6 @@ export class AuthService {
 
     signup(userData: { fullName: string | null; email: string | null; password: string | null }): Observable<{ success: boolean; message: string }> {
         return this.http.post<{ email: string }>(`${this.API_URL}register`, userData).pipe(
-            tap((response) => {
-                console.log(`User with email ${response.email} has been registered.`);
-            }),
             map(() => ({ success: true, message: 'Inscription réussie !' })),
             catchError((error) => {
                 const backendMessage = error.error;
@@ -61,15 +58,14 @@ export class AuthService {
     }
 
     refreshToken(refreshToken: string): Observable<boolean> {
-        return this.http.post<{accessToken: string }>(`${this.API_URL}refresh_token`, {refreshToken}).pipe(
+        return this.http.post<{ accessToken: string }>(`${this.API_URL}refresh_token`, { refreshToken }).pipe(
             tap(response => {
                 localStorage.setItem('accessToken', response.accessToken);
-                const decoded: any = this.jwtService.decode(response.accessToken);
-                this.currentUserSignalPayload.set(decoded); 
+                const decoded = this.jwtService.decode(response.accessToken); // ✅ plus de any
+                this.currentUserSignalPayload.set(decoded);
             }),
             map(() => true),
             catchError(() => {
-                // Refresh token expiré → déconnexion propre
                 this.forceLogout();
                 return of(false);
             })
