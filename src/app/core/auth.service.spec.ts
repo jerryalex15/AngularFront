@@ -185,4 +185,26 @@ describe('AuthService', () => {
         expect(service.currentUserSignalPayload()).toBeNull();
         expect(router.navigate).toHaveBeenCalledWith(['/login']);
     });
+
+    it('should clear session and navigate to login even if logout request fails', () => {
+        const router = TestBed.inject(Router);
+        localStorage.setItem('accessToken', 'token');
+        localStorage.setItem('refreshToken', 'refresh');
+        service.currentUserSignalPayload.set({
+            sub: 'user@test.com',
+            exp: 1234567890,
+            iat: 1234567890
+        });
+
+        service.logout().subscribe();
+
+        const req = httpMock.expectOne('http://localhost:8080/api/auth/logout');
+        req.flush('Unauthorized', { status: 401, statusText: 'Unauthorized' }); // simule token invalide
+
+        expect(service.isLoggedIn()).toBeFalse();
+        expect(localStorage.getItem('accessToken')).toBeNull();
+        expect(localStorage.getItem('refreshToken')).toBeNull();
+        expect(service.currentUserSignalPayload()).toBeNull();
+        expect(router.navigate).toHaveBeenCalledWith(['/login']);
+    });
 });

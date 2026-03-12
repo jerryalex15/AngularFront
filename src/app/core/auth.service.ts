@@ -91,7 +91,10 @@ export class AuthService {
                 this.clearSession();
             }),
             map(() => void 0),
-            catchError(() => of(void 0))
+            catchError(() => {
+                this.clearSession();
+                return of(void 0);
+            })
         )
     }
 
