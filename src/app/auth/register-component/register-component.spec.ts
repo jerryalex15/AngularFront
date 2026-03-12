@@ -63,7 +63,7 @@ describe('RegisterComponent', () => {
     component.registerForm.setValue({
       fullName: 'John Doe',
       email: 'john@test.com',
-      password: '123456'  //NOSONAR
+      password: '12345678'  //NOSONAR
     });
 
     component.onSubmit();
@@ -80,7 +80,7 @@ describe('RegisterComponent', () => {
     component.registerForm.setValue({
       fullName: 'John Doe',
       email: 'john@test.com',
-      password: '123456' //NOSONAR
+      password: '12345678' //NOSONAR
     });
 
     component.onSubmit();
