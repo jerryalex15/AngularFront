@@ -8,7 +8,7 @@ module.exports = function(config) { //NOSONAR
         useBrowserName: false
         },
         coverageReporter: {
-            dir: 'coverage/',
+            dir: require('node:path').join(__dirname, 'coverage'),
             subdir: '.',
             reporters: [
                 { type: 'html'         },
