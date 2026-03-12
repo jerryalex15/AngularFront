@@ -41,3 +41,12 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Test
+# Test results
+/test-results.xml
+/test-results/
+coverage/
+
+# Environment variables
+/environment.prod.ts
