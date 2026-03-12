@@ -1,5 +1,5 @@
 <mat-toolbar color="primary" class="header">
-    <span class="app-title">My App</span>
+    <span class="app-title">Ankamantatra</span>
 
     <span class="spacer"></span>
 
@@ -12,7 +12,7 @@
 </mat-toolbar>
 
 <div class="content">
-    <h2>Welcome to My App {{ user?.sub }}!</h2>
+    <h2>Welcome to Ankamantatra {{ user?.sub }}!</h2>
     
     @if (this.isProfileOpen) {
         <app-profile-card [user]="user$ | async"></app-profile-card>
