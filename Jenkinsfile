@@ -39,7 +39,7 @@ pipeline {
             post {
                 always {
                     junit testResults: 'test-results/test-results.xml',
-                          allowEmptyResults: true                        
+                        allowEmptyResults: true
                 }
             }
         }
@@ -61,7 +61,7 @@ pipeline {
                             -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts \
                             -Dsonar.tests=src \
                             -Dsonar.test.inclusions=**/*.spec.ts \
-                            -Dsonar.javascript.lcov.reportPaths=coverage/${APP_NAME}/lcov.info \
+                            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
                             -Dsonar.junit.reportPaths=test-results/test-results.xml
                     '''
                 }
@@ -124,7 +124,7 @@ pipeline {
                             -o BatchMode=yes \
                             -o ConnectTimeout=30 \
                             "$SSH_USER@$VM_IP" \
-                            "echo '$DOCKER_PASS' | docker login -u '$DOCKER_USER' --password-stdin && \
+                                "echo '$DOCKER_PASS' | docker login -u '$DOCKER_USER' --password-stdin && \
                                 docker pull $DOCKER_IMAGE:$BUILD_NUMBER && \
                                 docker stop angular-front || true && \
                                 docker rm angular-front || true && \
