@@ -29,6 +29,9 @@
                 @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
                 <mat-error>Mot de passe requis</mat-error>
                 }
+                @if (registerForm.get('password')?.errors?.['minlength'] && registerForm.get('password')?.touched) {
+                    <mat-error>Minimum 8 caractères</mat-error>
+                }
             </mat-form-field>
 
             <button

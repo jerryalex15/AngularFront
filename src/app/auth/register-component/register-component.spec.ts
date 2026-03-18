@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs/internal/observable/of';
+import { ANIMATION_MODULE_TYPE } from '@angular/platform-browser/animations';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -30,6 +31,7 @@ describe('RegisterComponent', () => {
       ],
       providers: [
         provideHttpClient(), // 👈 mock HttpClient pour standalone
+        { provide: ANIMATION_MODULE_TYPE, useValue: 'NoopAnimations' },
         { provide: AuthService, useValue: authServiceMock },
         { provide: Router, useValue: routerMock },
         { provide: MatSnackBar, useValue: snackBarMock }
@@ -57,36 +59,42 @@ describe('RegisterComponent', () => {
   });
   
   it('should register user and redirect to login', () => {
-
-    authServiceMock.signup.and.returnValue(of(true)); // Simule une inscription réussie
-    
+    authServiceMock.signup.and.returnValue(of({ success: true, message: 'Inscription réussie !' }));
     component.registerForm.setValue({
       fullName: 'John Doe',
       email: 'john@test.com',
-      password: '123456'  //NOSONAR
+      password: '12345678' //NOSONAR
     });
-
     component.onSubmit();
-
     expect(authServiceMock.signup).toHaveBeenCalled();
     expect(snackBarMock.open)
-        .toHaveBeenCalledWith('Inscription réussie !', 'OK', { duration: 3000 });
+      .toHaveBeenCalledWith('Inscription réussie !', 'OK', { duration: 3000 });
     expect(routerMock.navigate).toHaveBeenCalledWith(['/login']);
   });
 
   it('should show error message on registration failure', () => {
-    authServiceMock.signup.and.returnValue(of(false)); // Simule une inscription échouée
-    
+    authServiceMock.signup.and.returnValue(of({ success: false, message: 'Erreur lors de l\'inscription.' }));
     component.registerForm.setValue({
       fullName: 'John Doe',
       email: 'john@test.com',
-      password: '123456' //NOSONAR
+      password: '12345678' //NOSONAR
     });
-
     component.onSubmit();
-
     expect(authServiceMock.signup).toHaveBeenCalled();
     expect(snackBarMock.open)
-        .toHaveBeenCalledWith('Erreur lors de l\'inscription.', 'OK', { duration: 3000 });
+      .toHaveBeenCalledWith('Erreur lors de l\'inscription.', 'OK', { duration: 3000 });
+  });
+
+  it('should show error message when email already exists', () => {
+    authServiceMock.signup.and.returnValue(of({ success: false, message: 'Cet email est déjà utilisé.' }));
+    component.registerForm.setValue({
+      fullName: 'John Doe',
+      email: 'john@test.com',
+      password: '12345678' //NOSONAR
+    });
+    component.onSubmit();
+    expect(authServiceMock.signup).toHaveBeenCalled();
+    expect(snackBarMock.open)
+      .toHaveBeenCalledWith('Cet email est déjà utilisé.', 'OK', { duration: 3000 });
   });
 });
